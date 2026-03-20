@@ -2,5 +2,8 @@ Flask
 tensorflow
 numpy
 pillow
+pandas
+openpyxl
 gunicorn
 keras
+python-3.10.13
