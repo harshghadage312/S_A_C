@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Results - Breed Prediction</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>Prediction Results</h1>
+
+  <div class="result-card">
+    <h2>✅ Predicted Breed: {{ breed }}</h2>
+    <p>Confidence: {{ (confidence*100) | round(2) }}%</p>
+  </div>
+
+  <h3>Top-5 Predictions</h3>
+  <canvas id="chart" width="400" height="200"></canvas>
+
+  {% if breed_info %}
+    <h3>📖 Breed Information</h3>
+    <table border="1" cellpadding="10" style="margin:auto;">
+      {% for key, value in breed_info.items() %}
+        <tr>
+          <th>{{ key }}</th>
+          <td>{{ value }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>No additional info found for this breed.</p>
+  {% endif %}
+
+  <p class="note">⚠ Results are AI-based, consult expert for final verification.</p>
+
+  <script>
+    const ctx = document.getElementById('chart').getContext('2d');
+    const data = {{ top5|tojson }};
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: Object.keys(data),
+        datasets: [{
+          label: 'Confidence',
+          data: Object.values(data),
+          backgroundColor: 'rgba(75, 192, 192, 0.6)'
+        }]
+      }
+    });
+  </script>
+</body>
+</html>

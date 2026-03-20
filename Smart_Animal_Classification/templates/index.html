@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cattle/Buffalo Breed Classifier</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <section class="hero">
+    <h1>🐮 Upload cattle/buffalo images to identify Breed & Type instantly 🚀</h1>
+    <div class="buttons">
+      <button type="button" onclick="showUpload()">📂 Upload Image</button>
+      <button type="button" onclick="openCamera()">📷 Open Camera</button>
+    </div>
+  </section>
+
+  <section id="upload-section" class="hidden">
+    <h2>Upload Different Views</h2>
+    <form id="uploadForm" enctype="multipart/form-data" method="POST" action="/predict">
+      <div class="upload-boxes">
+        <div>
+          <label>Front View</label>
+          <input type="file" name="front" accept="image/*" onchange="previewImage(this,'front-preview')">
+          <img id="front-preview" class="preview">
+        </div>
+        <div>
+          <label>Back View</label>
+          <input type="file" name="back" accept="image/*" onchange="previewImage(this,'back-preview')">
+          <img id="back-preview" class="preview">
+        </div>
+        <div>
+          <label>Side View</label>
+          <input type="file" name="side" accept="image/*" onchange="previewImage(this,'side-preview')">
+          <img id="side-preview" class="preview">
+        </div>
+      </div>
+      <button type="submit">🚀 Analyze / Classify Breed</button>
+    </form>
+  </section>
+
+  <p class="note">⚠ Please upload at least one view for accurate prediction.</p>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
